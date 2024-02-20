@@ -1,51 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>A-Frame Thumb Controls Component - Basic</title>
-    <meta name="description" content="Basic example for Thumb Controls component.">
-    <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
-    <script src="../../dist/aframe-thumb-controls-component.min.js"></script>
-    <script src="https://unpkg.com/aframe-environment-component@1.3.2/dist/aframe-environment-component.min.js"></script>
+  <meta charset="utf-8">
+  <title>A-Frame - Move Camera Rig on Plane with Left Thumbstick</title>
+  <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
+  <script src="../../dist/aframe-thumb-controls-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-environment-component@1.3.2/dist/aframe-environment-component.min.js"></script>
 </head>
 <body>
-    <script>
-        AFRAME.registerComponent('thumbstick-camera-movement', {
-            init: function () {
-                this.camera = document.querySelector('a-camera');
-                this.el.addEventListener('thumbrightstart', () => { this.moveCamera('x', 0.9) });
-                this.el.addEventListener('thumbrightend', () => { this.moveCamera('x', 0.1) });
-                this.el.addEventListener('thumbleftstart', () => { this.moveCamera('x', -0.9) });
-                this.el.addEventListener('thumbleftend', () => { this.moveCamera('x', -0.1) });
-                this.el.addEventListener('thumbupstart', () => { this.moveCamera('y', 0.9) });
-                this.el.addEventListener('thumbupend', () => { this.moveCamera('y', 0.1) });
-                this.el.addEventListener('thumbdownstart', () => { this.moveCamera('y', -0.9) });
-                this.el.addEventListener('thumbdownend', () => { this.moveCamera('y', -0.1) });
-            },
-            moveCamera: function (direction, distance) {
-                const position = this.camera.getAttribute('position');
-                position[direction] += distance;
-                this.camera.setAttribute('position', position);
-            }
-        });
-    </script>
+  <script>
+    AFRAME.registerComponent('camera-rig-movement', {
+      init: function () {
+        // Reference the camera entity
+        const camera = this.el.scene.querySelector('a-camera');
 
-    <a-scene environment="preset: forest">
-        <a-entity oculus-touch-controls="hand: right"
-                  vive-controls="hand: right"
-                  windows-motion-controls="hand: right"
-                  thumbstick-camera-movement
-                  thumb-controls></a-entity>
-        <a-entity oculus-touch-controls="hand: left"
-                  vive-controls="hand: left"
-                  windows-motion-controls="hand: left"
-                  thumbstick-camera-movement
-                  thumb-controls></a-entity>
-        <a-camera></a-camera>
-        <a-box position="0 1 -3"></a-box>
-    </a-scene>
+        // Listen for thumbstick events on the left controller
+        const leftController = this.el.scene.querySelector('[oculus-touch-controls][hand: left]');
+        if (!leftController) {
+          console.error('Left controller not found');
+          return;
+        }
 
-    <!--githubcorner-->
-    <a href="https://github.com/supermedium/superframe/tree/master/components/thumb-controls/examples/basic/" class="github-corner">
-        <svg width="80" height="80" viewBox="0 0 250 250" style="fill: #111; color: #EFEFEF; position: fixed; bottom: 0; border: 0; left: 0; transform: rotate(180deg); opacity: 0.8">
-            <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120
+        leftController.addEventListener('thumbrightstart', () => { this.moveCamera('x', 0.1) });
+        leftController.addEventListener('thumbrightend', () => { this.moveCamera('x', 0) });
+        leftController.addEventListener('thumbleftstart', () => { this.moveCamera('x', -0.1) });
+        leftController.addEventListener('thumbleftend', () => { this.moveCamera('x', 0) });
+        leftController.addEventListener('thumbupstart', () => { this.moveCamera('z', 0.1) }); // Move forward on z-axis
+        leftController.addEventListener('thumbupend', () => { this.moveCamera('z', 0) });
+        leftController.addEventListener('thumbdownstart', () => { this.moveCamera('z', -0.1) }); // Move backward on z-axis
+        leftController.addEventListener('thumbdownend', () => { this.moveCamera('z', 0) });
+      },
+
+      moveCamera: function (axis, distance) {
+        const position = camera.getAttribute('position');
+        position[axis] += distance;
+        camera.setAttribute('position', position);
+      }
+    });
+  </script>
+
+  <a-scene environment="preset: forest">
+    <a-entity oculus-touch-controls="hand: right"
+              vive-controls="hand: right"
+              windows-motion-controls="hand: right">
+    </a-entity>
+    <a-entity oculus-touch-controls="hand: left"
+              vive-controls="hand: left"
+              windows-motion-controls="hand: left"
+              camera-rig-movement
+              thumb-controls>
+    </a-entity>
+
+    <a-camera></a-camera>
+    <a-box position="0 1 -3"></a-box>
+  </a-scene>
+</body>
+</html>
