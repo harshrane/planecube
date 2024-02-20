@@ -1,38 +1,28 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>VR Movement with Oculus Touch Controls (A-Frame)</title>
-  <script src="https://aframe.io/releases/latest/aframe.min.js"></script>
-  <script src="https://unpkg.com/aframe-oculus-quest-hands@latest"></script>
-</head>
-<body>
-  <a-scene oculus-touch-controls>
-    <a-plane color="#7BC8A4" rotation="-90 0 0" width="50" height="50"></a-plane>
+  <head>
+     <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-thumb-controls-component@1.1.0/dist/aframe-thumb-controls-component.min.js"></script>
 
-    <a-entity position="-2 0.5 -2" rotation="0 45 0" scale="0.5 0.5 0.5" color="red" geometry="primitive: box"></a-entity>
-    <a-entity position="2 0.5 -2" rotation="0 45 0" scale="0.5 0.5 0.5" color="green" geometry="primitive: box"></a-entity>
-    <a-entity position="0 0.5 2" rotation="0 45 0" scale="0.5 0.5 0.5" color="blue" geometry="primitive: box"></a-entity>
+  </head>
+  <body>
+    <a-scene>
+      <!-- Plane -->
+      <a-plane color="gray" rotation="-90 0 0" width="10" height="10"></a-plane>
 
-    <a-entity camera look-controls oculus-touch-controls="hand: right">
-      <script>
-        const cameraRig = this; // Reference the camera entity
-        const movementSpeed = 0.1; // Adjust movement speed as needed
+      <!-- Cubes -->
+      <a-box color="red" position="-1 1 -3"></a-box>
+      <a-box color="green" position="0 1 -3"></a-box>
+      <a-box color="blue" position="1 1 -3"></a-box>
 
-        this.addEventListener('thumbstickmoved', (evt) => {
-          const x = evt.detail.x;
-          const y = evt.detail.y;
+      <!-- Camera -->
+      <a-entity id="cameraRig" position="0 1.6 0">
+        <a-camera id="camera" wasd-controls-enabled="false"></a-camera>
+      </a-entity>
 
-          const newPos = cameraRig.object3D.position.clone();
-          newPos.x += x * movementSpeed;
-          newPos.z -= y * movementSpeed; // Reverse z-axis for correct movement
-
-          cameraRig.setAttribute('position', newPos);
-        });
-      </script>
-    </a-entity>
-
-    <a-light type="ambient" color="#888"></a-light>
-    <a-light type="directional" color="#fff" intensity="0.8" position="-3 4 3"></a-light>
-  </a-scene>
-</body>
+      <!-- Oculus Touch Controllers -->
+      <a-entity oculus-touch-controls="hand: left" thumbstick-controls="movementEnabled: true; rotationSensitivity: 0.05; movementSpeed: 0.1; cameraRig: #cameraRig; camera: #camera"></a-entity>
+      <a-entity oculus-touch-controls="hand: right"></a-entity>
+    </a-scene>
+  </body>
 </html>
