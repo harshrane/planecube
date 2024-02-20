@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>A-Frame Project with Oculus Quest 2 Controller Joystick Movement</title>
+  <title>VR Movement with Oculus Touch Controls (A-Frame)</title>
   <script src="https://aframe.io/releases/latest/aframe.min.js"></script>
   <script src="https://unpkg.com/aframe-oculus-quest-hands@latest"></script>
 </head>
@@ -15,22 +15,18 @@
 
     <a-entity camera look-controls oculus-touch-controls="hand: right">
       <script>
-        const camera = this.querySelector('[camera]');
-        const moveSpeed = 0.05; // Adjust move speed as needed
+        const cameraRig = this; // Reference the camera entity
+        const movementSpeed = 0.1; // Adjust movement speed as needed
 
-        this.addEventListener('gamepaddata', (evt) => {
-          const gamepad = evt.detail;
-          if (gamepad) {
-            const joystick = gamepad.axes[0]; // Access left joystick axes
-            const x = joystick[0];
-            const y = joystick[1];
+        this.addEventListener('thumbstickmoved', (evt) => {
+          const x = evt.detail.x;
+          const y = evt.detail.y;
 
-            const newPos = camera.object3D.position.clone();
-            newPos.x += x * moveSpeed;
-            newPos.z -= y * moveSpeed; // Reverse z-axis for correct movement
+          const newPos = cameraRig.object3D.position.clone();
+          newPos.x += x * movementSpeed;
+          newPos.z -= y * movementSpeed; // Reverse z-axis for correct movement
 
-            camera.setAttribute('position', newPos);
-          }
+          cameraRig.setAttribute('position', newPos);
         });
       </script>
     </a-entity>
