@@ -16,11 +16,11 @@
 
       <!-- Camera -->
       <a-entity id="cameraRig" position="0 1.6 0">
-        <a-camera id="camera"></a-camera>
+        <a-camera id="camera" wasd-controls-enabled="false"></a-camera>
       </a-entity>
 
       <!-- Oculus Touch Controllers -->
-      <a-entity oculus-touch-controls="hand: left" thumbstick-controls="cameraRig: #cameraRig; camera: #camera"></a-entity>
+      <a-entity oculus-touch-controls="hand: left" thumbstick-controls="movementEnabled: true; rotationSensitivity: 0.05; movementSpeed: 0.1; cameraRig: #cameraRig; camera: #camera"></a-entity>
       <a-entity oculus-touch-controls="hand: right"></a-entity>
     </a-scene>
   </body>
