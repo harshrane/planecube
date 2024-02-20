@@ -2,6 +2,7 @@
 <html>
   <head>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v6.1.3/dist/aframe-extras.min.js"></script>
   </head>
   <body>
     <a-scene>
@@ -14,7 +15,11 @@
       <a-box color="blue" position="1 1 -3"></a-box>
 
       <!-- Camera and Controls -->
-      <a-entity camera position="0 1.6 0" look-controls wasd-controls></a-entity>
+      <a-entity camera look-controls wasd-controls></a-entity>
+
+      <!-- Controllers -->
+      <a-entity laser-controls="hand: left"></a-entity>
+      <a-entity laser-controls="hand: right"></a-entity>
     </a-scene>
   </body>
 </html>
