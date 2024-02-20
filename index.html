@@ -1,51 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>A-Frame Project with Oculus Quest 2 Controller Joystick Movement</title>
+  <head>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v6.1.0/dist/aframe-extras.min.js"></script>
-    <script>
-        AFRAME.registerComponent('thumbstick-movement', {
-            init: function () {
-                this.el.addEventListener('thumbstickmoved', this.moveCamera.bind(this));
-            },
-            moveCamera: function (evt) {
-                var camera = document.querySelector('[camera]');
-                var moveSpeed = 0.05; // Adjust move speed as needed
-                
-                // Get thumbstick input values
-                var x = evt.detail.x;
-                var y = evt.detail.y;
-                
-                // Calculate new position based on thumbstick input
-                var newPos = camera.object3D.position.clone();
-                newPos.x += x * moveSpeed;
-                newPos.z -= y * moveSpeed; // Reverse z-axis for correct movement
-                
-                // Apply new position to camera
-                camera.setAttribute('position', newPos);
-            }
-        });
-    </script>
-</head>
-<body>
-    <a-scene oculus-touch-controls="hand: right">
-        <!-- Create a horizontal plane -->
-        <a-plane color="#7BC8A4" rotation="-90 0 0" width="50" height="50"></a-plane>
-        
-        <!-- Add three cubes on the plane -->
-        <a-entity position="-2 0.5 -2" rotation="0 45 0" scale="0.5 0.5 0.5" color="red" geometry="primitive: box"></a-entity>
-        <a-entity position="2 0.5 -2" rotation="0 45 0" scale="0.5 0.5 0.5" color="green" geometry="primitive: box"></a-entity>
-        <a-entity position="0 0.5 2" rotation="0 45 0" scale="0.5 0.5 0.5" color="blue" geometry="primitive: box"></a-entity>
-        
-        <!-- Enable movement with Meta Quest 2 controller joystick -->
-        <a-entity camera look-controls
-                  thumbstick-movement
-                  oculus-touch-controls="hand: right"></a-entity>
-        
-        <!-- Lights -->
-        <a-light type="ambient" color="#888"></a-light>
-        <a-light type="directional" color="#fff" intensity="0.8" position="-3 4 3"></a-light>
+  </head>
+  <body>
+    <a-scene>
+      <!-- Plane -->
+      <a-plane color="gray" rotation="-90 0 0" width="10" height="10"></a-plane>
+
+      <!-- Cubes -->
+      <a-box color="red" position="-1 1 -3"></a-box>
+      <a-box color="green" position="0 1 -3"></a-box>
+      <a-box color="blue" position="1 1 -3"></a-box>
+
+      <!-- Camera and Controls -->
+      <a-entity camera position="0 1.6 0" look-controls wasd-controls></a-entity>
     </a-scene>
-</body>
+  </body>
 </html>
