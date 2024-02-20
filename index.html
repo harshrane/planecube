@@ -32,7 +32,7 @@
 
 <body>
     <a-scene renderer="antialias: true">
-          <a-entity gltf-model="url(scene.gltf)" position="0 0 -5" scale="1 1 1"></a-entity>
+          
         <a-entity id="utilisateur" position="0 0 0" movement-controls>
             <a-entity camera position="0 1.5 1" look-controls></a-entity>
             <a-entity oculus-touch-controls="hand: left" gauche></a-entity>
@@ -40,7 +40,7 @@
         </a-entity>
 
         <a-plane width="10" height="10" color="#999999" position=" 0 0 0" rotation="-90 0 0"></a-plane>
-
+        <a-entity gltf-model="url(scene.gltf)" position="0 0.5 -2" scale="1 1 1"></a-entity>
         <a-box id="boite1" position="-2 0.5 -3" color="blue"></a-box>
         <a-box id="boite2" position="0 0.5 -3" color="blue"></a-box>
         <a-box id="boite3" position="2 0.5 -3" color="blue"></a-box>
