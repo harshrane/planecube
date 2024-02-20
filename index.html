@@ -3,6 +3,23 @@
   <head>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v6.1.3/dist/aframe-extras.min.js"></script>
+    <script>
+      AFRAME.registerComponent('thumbstick-movement', {
+        init: function () {
+          this.el.addEventListener('thumbstickmoved', this.movePlayer.bind(this));
+        },
+        movePlayer: function (evt) {
+          const player = this.el;
+          const movementSpeed = 0.1; // Adjust movement speed as needed
+
+          // Move forward/backward based on the thumbstick's vertical axis
+          player.object3D.translateZ(-evt.detail.y * movementSpeed);
+
+          // Move left/right based on the thumbstick's horizontal axis
+          player.object3D.translateX(evt.detail.x * movementSpeed);
+        }
+      });
+    </script>
   </head>
   <body>
     <a-scene>
@@ -15,12 +32,12 @@
       <a-box color="blue" position="1 1 -3"></a-box>
 
       <!-- Camera -->
-      <a-entity id="cameraRig" position="0 1.6 0">
+      <a-entity id="cameraRig" position="0 1.6 0" thumbstick-movement>
         <a-camera id="camera" wasd-controls-enabled="false"></a-camera>
       </a-entity>
 
       <!-- Oculus Touch Controllers -->
-      <a-entity oculus-touch-controls="hand: left" thumbstick-controls="movementEnabled: true; rotationSensitivity: 0.05; movementSpeed: 0.1; cameraRig: #cameraRig; camera: #camera"></a-entity>
+      <a-entity oculus-touch-controls="hand: left" thumbstick-controls="movementEnabled: true; rotationSensitivity: 0.05;"></a-entity>
       <a-entity oculus-touch-controls="hand: right"></a-entity>
     </a-scene>
   </body>
