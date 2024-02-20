@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>A-Frame Project with Meta Quest 2 Controller</title>
+    <title>A-Frame Project with Meta Quest 2 Controller Joystick</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v6.1.0/dist/aframe-extras.min.js"></script>
 </head>
 <body>
-    <a-scene oculus-touch-controls>
+    <a-scene oculus-touch-controls="hand: right">
         <!-- Create a horizontal plane -->
         <a-plane color="#7BC8A4" rotation="-90 0 0" width="50" height="50"></a-plane>
         
@@ -15,7 +16,7 @@
         <a-entity position="0 0.5 2" rotation="0 45 0" scale="0.5 0.5 0.5" color="blue" geometry="primitive: box"></a-entity>
         
         <!-- Enable movement with Meta Quest 2 controller joystick -->
-        <a-entity camera look-controls oculus-touch-controls="hand: right" movement-controls></a-entity>
+        <a-entity camera look-controls universal-controls="movementControls: gamepad; gamepadMovementMode: right-stick" oculus-touch-controls="hand: right"></a-entity>
         
         <!-- Lights -->
         <a-light type="ambient" color="#888"></a-light>
