@@ -17,9 +17,25 @@
       <!-- Camera and Controls -->
       <a-entity camera look-controls wasd-controls></a-entity>
 
-      <!-- Controllers -->
-      <a-entity laser-controls="hand: left"></a-entity>
-      <a-entity laser-controls="hand: right"></a-entity>
+      <!-- Controller Models -->
+      <a-entity
+        gltf-model="#leftControllerModel"
+        rotation="0 90 0"
+        position="-1 1.6 -1"
+        scale="0.1 0.1 0.1"
+      ></a-entity>
+      <a-entity
+        gltf-model="#rightControllerModel"
+        rotation="0 -90 0"
+        position="1 1.6 -1"
+        scale="0.1 0.1 0.1"
+      ></a-entity>
+
+      <!-- Define Controller Models -->
+      <a-assets>
+        <a-asset-item id="leftControllerModel" src="oculus-touch-controller-left.obj"></a-asset-item>
+        <a-asset-item id="rightControllerModel" src="oculus-touch-controller-right.obj"></a-asset-item>
+      </a-assets>
     </a-scene>
   </body>
 </html>
